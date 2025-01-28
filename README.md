@@ -2,7 +2,7 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-![CI](https://github.com/shapiy/payments/actions/workflows/main.yml/badge.svg)
+![CI](https://github.com/shapiy/payments/actions/workflows/ci.yaml/badge.svg)
 
 ## Description
 
