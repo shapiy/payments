@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: install yarn
+        run: npm install -g yarn
+
+      - name: install dependencies
+        run: yarn install
+
+      - name: check formatting
+        run: yarn format-check
+
+      - name: lint code
+        run: yarn lint
+
+      - name: run tests
+        run: yarn test
+
+      - name: build
+        run: yarn build
