@@ -28,3 +28,13 @@ model SystemConfigValue {
 
   @@map("system_config")
 }
+
+model Merchant {
+  id             String   @id
+  name           String
+  commissionRate Decimal  @map("commission_rate")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("merchants")
+}
