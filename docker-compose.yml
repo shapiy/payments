@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: "postgres:14"
+    container_name: payments_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: payments
+      POSTGRES_PASSWORD: payments
+      POSTGRES_DB: payments
+    volumes:
+      - ./db/postgres:/var/lib/postgresql/data
+    restart: unless-stopped
