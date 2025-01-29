@@ -6,10 +6,14 @@ import { DefaultArgs, GetFindResult } from '@prisma/client/runtime/client';
 import { Prisma } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { plainToInstance } from 'class-transformer';
+import { UtilsService } from '../utils.service';
 
 @Injectable()
 export class MerchantService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly utils: UtilsService,
+  ) {}
 
   async create(dto: CreateMerchantDto) {
     const { id } = await this.prisma.merchant.create({
@@ -77,10 +81,14 @@ export class MerchantService {
       Prisma.PrismaClientOptions
     >,
   ) {
-    return plainToInstance(MerchantDto, {
-      ...record,
-      // Map postgres/prisma Decimal to number
-      commissionRate: Number(record.commissionRate.toFixed(2)),
-    });
+    return plainToInstance(
+      MerchantDto,
+      {
+        ...record,
+        // Map postgres/prisma Decimal to number
+        commissionRate: this.utils.prismaDecimalToNumber(record.commissionRate),
+      },
+      { excludeExtraneousValues: true },
+    );
   }
 }

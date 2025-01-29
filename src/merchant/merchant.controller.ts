@@ -26,8 +26,8 @@ export class MerchantController {
     description: 'id of created merchant',
   })
   @Post()
-  create(@Body() request: CreateMerchantDto) {
-    return this.service.create(request);
+  create(@Body() dto: CreateMerchantDto) {
+    return this.service.create(dto);
   }
 
   @ApiOperation({ summary: 'Get all merchants' })
@@ -51,7 +51,6 @@ export class MerchantController {
   @ApiResponse({
     status: 404,
     description: 'Merchant with such id does not exist',
-    type: MerchantDto,
   })
   @Get(':id')
   async findOne(@Param('id') id: string) {

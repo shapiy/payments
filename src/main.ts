@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { BusinessExceptionFilter } from './business-exception.filter';
 
 async function bootstrap() {
   const appOptions = { cors: true };
@@ -10,8 +11,12 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: false,
     }),
   );
+
+  app.useGlobalFilters(new BusinessExceptionFilter());
 
   const options = new DocumentBuilder()
     .setTitle('Payments App')
