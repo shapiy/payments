@@ -5,6 +5,7 @@ import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
 import { SystemConfigurationModule } from './system-configuration/system-configuration.module';
 import { MerchantModule } from './merchant/merchant.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { MerchantModule } from './merchant/merchant.module';
     }),
     MerchantModule,
     SystemConfigurationModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

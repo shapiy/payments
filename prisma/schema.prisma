@@ -30,11 +30,35 @@ model SystemConfigValue {
 }
 
 model Merchant {
-  id             String   @id
+  id             String    @id
   name           String
-  commissionRate Decimal  @map("commission_rate")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  commissionRate Decimal   @map("commission_rate")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  payments       Payment[]
 
   @@map("merchants")
+}
+
+enum PaymentStatus {
+  ACCEPTED  @map("accepted")
+  PROCESSED @map("processed")
+  COMPLETED @map("completed")
+  PAID_OUT  @map("paid_out")
+}
+
+model Payment {
+  id                 String        @id
+  merchantId         String        @map("merchant_id")
+  amount             Decimal
+  status             PaymentStatus
+  holdAmount         Decimal       @map("hold_amount") // Coeff. D
+  systemFee          Decimal       @map("system_fee") // Coeff. A + B
+  merchantCommission Decimal       @map("merchant_commission") // Coeff. C
+  availableAmount    Decimal       @map("available_amount") // Amount available for payout
+  createdAt          DateTime      @default(now()) @map("created_at")
+  updatedAt          DateTime      @updatedAt @map("updated_at")
+  merchant           Merchant      @relation(fields: [merchantId], references: [id])
+
+  @@map("payments")
 }

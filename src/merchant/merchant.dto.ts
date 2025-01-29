@@ -9,9 +9,11 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { Expose } from 'class-transformer';
 
 export class CreateMerchantDto {
   @ApiProperty()
+  @Expose()
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(100)
@@ -19,6 +21,7 @@ export class CreateMerchantDto {
 
   // Coeff. C
   @ApiProperty()
+  @Expose()
   @IsNumber({ maxDecimalPlaces: 2 })
   @IsPositive()
   @Max(0.1)
@@ -28,6 +31,7 @@ export class CreateMerchantDto {
 
 export class MerchantIdDto {
   @ApiProperty()
+  @Expose()
   @IsUUID()
   id: string;
 }
