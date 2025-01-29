@@ -17,6 +17,12 @@ $ yarn install
 ## Compile and run the project
 
 ```bash
+# prepare configuration
+cp .env.example .env
+
+# run dependencies
+docker compose up
+
 # development
 $ yarn run start
 
