@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { SystemConfigurationService } from '../system-configuration/system-configuration.service';
 import Decimal from 'decimal.js';
-import { Payment, PaymentStatus } from '@prisma/client';
+import { Payment, PaymentStatus, Prisma } from '@prisma/client';
 import { CreatePaymentDto, PaymentDto } from './payment.dto';
 import { plainToInstance } from 'class-transformer';
 import { v7 as uuidv7 } from 'uuid';
@@ -74,6 +74,15 @@ export class PaymentService {
     return results.map((record) => this.toDto(record));
   }
 
+  async findMany(tx: Prisma.TransactionClient, ids: string[]) {
+    const results = await tx.payment.findMany({
+      where: {
+        id: { in: ids },
+      },
+    });
+    return results.map((record) => this.toDto(record));
+  }
+
   async findOne(id: string) {
     const result = await this.prisma.payment.findUnique({
       where: {
@@ -84,6 +93,40 @@ export class PaymentService {
       return this.toDto(result);
     }
     return result;
+  }
+
+  async markPaymentsAsProcessed(
+    tx: Prisma.TransactionClient,
+    paymentIds: string[],
+  ) {
+    const results = await tx.payment.updateMany({
+      where: {
+        id: { in: paymentIds },
+        status: PaymentStatus.ACCEPTED,
+      },
+      data: {
+        status: PaymentStatus.PROCESSED,
+      },
+    });
+
+    return results.count;
+  }
+
+  async markPaymentsAsCompleted(
+    tx: Prisma.TransactionClient,
+    paymentIds: string[],
+  ) {
+    const results = await tx.payment.updateMany({
+      where: {
+        id: { in: paymentIds },
+        status: PaymentStatus.PROCESSED,
+      },
+      data: {
+        status: PaymentStatus.COMPLETED,
+      },
+    });
+
+    return results.count;
   }
 
   private toDto(payment: Payment) {

@@ -1,4 +1,14 @@
-import { IsEnum, IsNumber, IsPositive, IsUUID, Min } from 'class-validator';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsEnum,
+  IsNumber,
+  IsPositive,
+  IsString,
+  IsUUID,
+  Min,
+} from 'class-validator';
 import { ApiProperty, IntersectionType } from '@nestjs/swagger';
 import { PaymentStatus } from '@prisma/client';
 import { Expose } from 'class-transformer';
@@ -59,3 +69,28 @@ export class PaymentDto extends IntersectionType(
   PaymentIdDto,
   PaymentDetailsDto,
 ) {}
+
+export class UpdatePaymentsStatusDto {
+  @ApiProperty()
+  @Expose()
+  @IsArray()
+  @ArrayMinSize(1)
+  @ArrayMaxSize(20)
+  @IsString({ each: true })
+  paymentIds: string[];
+}
+
+export class UpdatePaymentsResultDto {
+  @ApiProperty()
+  @Expose()
+  @IsNumber()
+  statusCode: number;
+  @ApiProperty()
+  @Expose()
+  @IsString()
+  message: string;
+  @ApiProperty()
+  @Expose()
+  @IsNumber()
+  processedCount: number;
+}
