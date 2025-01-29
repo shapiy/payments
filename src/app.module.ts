@@ -4,10 +4,10 @@ import { AppService } from './app.service';
 import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
 import { SystemConfigurationModule } from './system-configuration/system-configuration.module';
+import { MerchantModule } from './merchant/merchant.module';
 
 @Module({
   imports: [
-    SystemConfigurationModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
@@ -30,6 +30,7 @@ import { SystemConfigurationModule } from './system-configuration/system-configu
         abortEarly: true,
       },
     }),
+    MerchantModule,
     SystemConfigurationModule,
   ],
   controllers: [AppController],
