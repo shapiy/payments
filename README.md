@@ -17,7 +17,7 @@ In order to follow the payouts logic, it is better to check [the e2e test suite]
 - **All fees are computed** and stored in the database **immediately** when the payment is accepted. It means that configuration
   changes do not affect historical payments.
 - **Payouts API** is deliberately missing the validation on the payout limits (once a day) to facilitate testing.
-- Payments can be prioritized for payouts using a strategy (see [payment-prioritization-strategy.interface.ts](src/payout/strategies/payment-prioritization-strategy.interface.ts)).
+- **Payments can be prioritized** for payouts using a strategy (see [payment-prioritization-strategy.interface.ts](src/payout/strategies/payment-prioritization-strategy.interface.ts)).
 - By default `COMPLETED` payments are prioritized over `PROCESSED`.
 
 ## Project setup
