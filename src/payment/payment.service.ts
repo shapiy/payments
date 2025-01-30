@@ -28,21 +28,19 @@ export class PaymentService {
     const config = await this.systemConfigurationService.get();
 
     const amount = new Decimal(dto.amount);
-    const hundred = new Decimal(100);
 
     const configFeeFixed = new Decimal(config.feeFixed);
     const configFeePercent = new Decimal(config.feePercent);
     const configHoldPercent = new Decimal(config.holdPercent);
     const merchantCommissionRate = new Decimal(merchant.commissionRate);
 
+    // All percentages are fractions of 1, e.g. 5% is 0.05
     // Coeff. A + B
-    const systemFee = configFeeFixed.plus(
-      amount.mul(configFeePercent).div(hundred),
-    );
+    const systemFee = configFeeFixed.plus(amount.mul(configFeePercent));
     // Coeff. C
-    const merchantCommission = amount.mul(merchantCommissionRate).div(hundred);
+    const merchantCommission = amount.mul(merchantCommissionRate);
     // Coeff. D
-    const holdAmount = amount.mul(configHoldPercent).div(hundred);
+    const holdAmount = amount.mul(configHoldPercent);
 
     const availableAmount = amount.minus(systemFee).minus(merchantCommission);
 

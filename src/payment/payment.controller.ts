@@ -6,6 +6,7 @@ import {
   Param,
   HttpException,
   HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -103,6 +104,7 @@ export class PaymentController {
     status: 400,
     description: 'Payments with invalid status',
   })
+  @HttpCode(HttpStatus.OK)
   @Post('_process')
   async processPayments(@Body() { paymentIds }: UpdatePaymentsStatusDto) {
     return this.prisma.$transaction(async (tx) => {
@@ -131,6 +133,7 @@ export class PaymentController {
     status: 400,
     description: 'Payments with invalid status',
   })
+  @HttpCode(HttpStatus.OK)
   @Post('_complete')
   async completePayments(@Body() { paymentIds }: UpdatePaymentsStatusDto) {
     return this.prisma.$transaction(async (tx) => {
