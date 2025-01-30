@@ -36,6 +36,7 @@ model Merchant {
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
   payments       Payment[]
+  Payout         Payout[]
 
   @@map("merchants")
 }
@@ -58,7 +59,23 @@ model Payment {
   availableAmount    Decimal       @map("available_amount") // Amount available for payout
   createdAt          DateTime      @default(now()) @map("created_at")
   updatedAt          DateTime      @updatedAt @map("updated_at")
+  paidAt             DateTime?     @map("paid_at")
   merchant           Merchant      @relation(fields: [merchantId], references: [id])
+  Payout             Payout?       @relation(fields: [payoutId], references: [id])
+  payoutId           String?
 
   @@map("payments")
+}
+
+model Payout {
+  id          String    @id
+  merchantId  String    @map("merchant_id")
+  amount      Decimal
+  status      String    @default("completed")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  processedAt DateTime  @default(now()) @map("processed_at")
+  merchant    Merchant  @relation(fields: [merchantId], references: [id])
+  payments    Payment[]
+
+  @@map("payouts")
 }

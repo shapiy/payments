@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SystemConfigurationModule } from './system-configuration/system-configuration.module';
 import { MerchantModule } from './merchant/merchant.module';
 import { PaymentModule } from './payment/payment.module';
+import { PayoutModule } from './payout/payout.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { PaymentModule } from './payment/payment.module';
     MerchantModule,
     SystemConfigurationModule,
     PaymentModule,
+    PayoutModule,
   ],
   controllers: [AppController],
   providers: [AppService],

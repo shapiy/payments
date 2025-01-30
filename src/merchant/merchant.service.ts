@@ -86,7 +86,7 @@ export class MerchantService {
       {
         ...record,
         // Map postgres/prisma Decimal to number
-        commissionRate: this.utils.prismaDecimalToNumber(record.commissionRate),
+        commissionRate: this.utils.decimalToNumber(record.commissionRate),
       },
       { excludeExtraneousValues: true },
     );

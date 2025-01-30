@@ -40,6 +40,8 @@ describe('PaymentService', () => {
     availableAmount: new Decimal(95),
     createdAt: new Date(),
     updatedAt: new Date(),
+    paidAt: null,
+    payoutId: null,
   };
 
   beforeEach(async () => {

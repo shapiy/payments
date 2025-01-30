@@ -14,7 +14,7 @@ export class UtilsService {
     return value;
   };
 
-  prismaDecimalToNumber(decimal: Prisma.Decimal): number {
+  decimalToNumber(decimal: Prisma.Decimal): number {
     return Number(decimal.toFixed(2));
   }
 
