@@ -141,12 +141,11 @@ export class PaymentService {
       PaymentDto,
       {
         ...payment,
-        amount: this.utils.prismaDecimalToNumber(amount),
-        systemFee: this.utils.prismaDecimalToNumber(systemFee),
-        merchantCommission:
-          this.utils.prismaDecimalToNumber(merchantCommission),
-        holdAmount: this.utils.prismaDecimalToNumber(holdAmount),
-        availableAmount: this.utils.prismaDecimalToNumber(availableAmount),
+        amount: this.utils.decimalToNumber(amount),
+        systemFee: this.utils.decimalToNumber(systemFee),
+        merchantCommission: this.utils.decimalToNumber(merchantCommission),
+        holdAmount: this.utils.decimalToNumber(holdAmount),
+        availableAmount: this.utils.decimalToNumber(availableAmount),
       },
       { excludeExtraneousValues: true },
     );

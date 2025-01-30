@@ -12,6 +12,7 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import {
   CreatePaymentDto,
   PaymentDto,
+  UpdatePaymentsResultDto,
   UpdatePaymentsStatusDto,
 } from './payment.dto';
 import { UtilsService } from '../utils.service';
@@ -92,7 +93,7 @@ export class PaymentController {
   @ApiResponse({
     status: 200,
     description: 'Status update result',
-    type: UpdatePaymentsStatusDto,
+    type: UpdatePaymentsResultDto,
   })
   @ApiResponse({
     status: 400,
@@ -124,7 +125,7 @@ export class PaymentController {
   @ApiResponse({
     status: 200,
     description: 'Status update result',
-    type: UpdatePaymentsStatusDto,
+    type: UpdatePaymentsResultDto,
   })
   @ApiResponse({
     status: 400,
