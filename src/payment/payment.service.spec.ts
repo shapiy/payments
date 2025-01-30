@@ -18,15 +18,15 @@ describe('PaymentService', () => {
   const merchant = {
     id: 'merchant-1',
     name: 'ACME Corp.',
-    commissionRate: new Decimal(2.5),
+    commissionRate: new Decimal(0.025),
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
   const systemConfig = {
     feeFixed: 1,
-    feePercent: 1.5,
-    holdPercent: 10,
+    feePercent: 0.015,
+    holdPercent: 0.1,
   };
 
   const payment = {
@@ -129,10 +129,10 @@ describe('PaymentService', () => {
 
       expect(prisma.payment.create).toHaveBeenCalledWith({
         data: expect.objectContaining({
-          systemFee: new Decimal('2.5'), // $1 + (1.5% of $100)
-          merchantCommission: new Decimal('2.5'), // 2.5% of $100
-          holdAmount: new Decimal('10'), // 10% of $100
-          availableAmount: new Decimal('95'), // $100 - $2.5 - $2.5
+          systemFee: new Decimal(2.5), // $1 + (1.5% of $100)
+          merchantCommission: new Decimal(2.5), // 2.5% of $100
+          holdAmount: new Decimal(10), // 10% of $100
+          availableAmount: new Decimal(95), // $100 - $2.5 - $2.5
         }),
       });
     });

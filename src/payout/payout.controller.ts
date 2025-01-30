@@ -1,4 +1,11 @@
-import { Controller, Param, Post, Query } from '@nestjs/common';
+import {
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { PayoutService } from './payout.service';
 import { PayoutResponseDto } from './payout.dto';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
@@ -38,6 +45,7 @@ export class PayoutController {
     description: 'payout details',
     type: PayoutResponseDto,
   })
+  @HttpCode(HttpStatus.OK)
   @Post('merchants/:merchantId')
   async createMerchantPayout(
     @Param('merchantId') merchantId: string,
